@@ -203,7 +203,7 @@ class EquidistantProjection implements ProjectionStrategy {
  * - 常用于鱼眼镜头
  */
 class EquisolidProjection implements ProjectionStrategy {
-  viewportToAngles(nx: number, ny: number, fov: number, aspectRatio: number): { theta: number; phi: number } {
+  viewportToAngles(nx: number, ny: number, _fov: number, aspectRatio: number): { theta: number; phi: number } {
     // 考虑宽高比，调整x方向
     const adjustedNx = nx * aspectRatio;
     const r = Math.sqrt(adjustedNx * adjustedNx + ny * ny);
@@ -221,7 +221,7 @@ class EquisolidProjection implements ProjectionStrategy {
     return { theta, phi };
   }
 
-  anglesToViewport(theta: number, phi: number, fov: number, aspectRatio: number): { nx: number; ny: number } {
+  anglesToViewport(theta: number, phi: number, _fov: number, aspectRatio: number): { nx: number; ny: number } {
     const angle = Math.sqrt(theta * theta + phi * phi);
 
     if (angle < 0.0001) {

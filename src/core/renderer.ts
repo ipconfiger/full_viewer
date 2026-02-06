@@ -35,7 +35,7 @@ export class FishEyePanoramaRenderer {
   private animationFrameId: number | null = null;
   private isDirty = true;
   private dragStart: { x: number; y: number } | null = null;
-  private dragStartState: { yaw: number; pitch: number } | null = null;
+  private _dragStartState: { yaw: number; pitch: number } | null = null;
 
   // Offscreen canvas for source image data
   private sourceCanvas: HTMLCanvasElement | null = null;
@@ -320,7 +320,7 @@ export class FishEyePanoramaRenderer {
   private handleMouseDown(data: InputData): void {
     if (data.x !== undefined && data.y !== undefined) {
       this.dragStart = { x: data.x, y: data.y };
-      this.dragStartState = { yaw: this.state.yaw, pitch: this.state.pitch };
+      this._dragStartState = { yaw: this.state.yaw, pitch: this.state.pitch };
       this.state.isDragging = true;
     }
   }
@@ -360,7 +360,7 @@ export class FishEyePanoramaRenderer {
   private handleMouseUp(): void {
     this.state.isDragging = false;
     this.dragStart = null;
-    this.dragStartState = null;
+    this._dragStartState = null;
   }
 
   private handleWheel(data: InputData): void {
@@ -391,7 +391,7 @@ export class FishEyePanoramaRenderer {
         this.handleMouseMove({ dx, dy });
         // Update drag start for relative movement
         this.dragStart = { x: touch.x, y: touch.y };
-        this.dragStartState = { yaw: this.state.yaw, pitch: this.state.pitch };
+        this._dragStartState = { yaw: this.state.yaw, pitch: this.state.pitch };
       }
     }
   }

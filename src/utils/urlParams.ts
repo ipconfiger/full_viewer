@@ -1,4 +1,4 @@
-import { PanoramaLabel, ProjectionType } from '@fisheye-panorama/core';
+import { PanoramaLabel, ProjectionType } from '../core';
 
 export interface UrlParams {
   src: string;
