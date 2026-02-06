@@ -145,7 +145,20 @@ export class FishEyePanoramaRenderer {
       };
 
       img.onerror = () => {
-        const error = new Error(`Failed to load image: ${src}`);
+        // Provide detailed CORS error message
+        let errorMsg = `Failed to load image: ${src}`;
+
+        // Check if it might be a CORS issue
+        if (src.startsWith('http://') || src.startsWith('https://')) {
+          const hostname = new URL(src).hostname;
+          errorMsg += `\n\nPossible causes:\n`;
+          errorMsg += `1. CORS not configured on ${hostname}\n`;
+          errorMsg += `2. Image doesn't exist or is inaccessible\n`;
+          errorMsg += `3. Network connectivity issues\n\n`;
+          errorMsg += `For OSS/AWS S3/CloudFront: Configure CORS rules to allow GET requests from your domain.`;
+        }
+
+        const error = new Error(errorMsg);
         if (this.callbacks.onError) {
           this.callbacks.onError(error);
         }
