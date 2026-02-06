@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Fish-Eye Panorama Embed Tests</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: #f5f5f5;
+      padding: 20px;
+    }
+    .container { max-width: 1400px; margin: 0 auto; }
+    h1 { color: #333; margin-bottom: 30px; }
+    .test-section {
+      background: white;
+      border-radius: 8px;
+      padding: 20px;
+      margin-bottom: 30px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+    h2 { color: #555; margin-bottom: 15px; font-size: 1.3rem; }
+    .description { color: #666; margin-bottom: 15px; font-size: 0.95rem; }
+    .iframe-wrapper {
+      border: 2px solid #ddd;
+      border-radius: 8px;
+      overflow: hidden;
+      background: #f9f9f9;
+    }
+    iframe {
+      display: block;
+      width: 100%;
+      height: 500px;
+      border: none;
+    }
+    .code-block {
+      background: #2d2d2d;
+      color: #f8f8f2;
+      padding: 15px;
+      border-radius: 4px;
+      overflow-x: auto;
+      font-family: "Monaco", "Menlo", monospace;
+      font-size: 0.85rem;
+      margin-top: 15px;
+    }
+    .code-block code {
+      color: #a6e22e;
+    }
+    .small-iframe { height: 300px; }
+    .responsive-container {
+      position: relative;
+      width: 100%;
+      padding-top: 56.25%; /* 16:9 aspect ratio */
+    }
+    .responsive-container iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Fish-Eye Panorama Embed Tests</h1>
+
+    <!-- Test 1: Basic Embed -->
+    <div class="test-section">
+      <h2>1. Basic Embed</h2>
+      <p class="description">Simplest usage with just the image URL</p>
+      <div class="iframe-wrapper">
+        <iframe src="http://localhost:3001/?src=/panorama.jpg"></iframe>
+      </div>
+      <div class="code-block"><code>&lt;iframe src="http://localhost:3001/?src=/panorama.jpg"&gt;&lt;/iframe&gt;</code></div>
+    </div>
+
+    <!-- Test 2: Custom Projection -->
+    <div class="test-section">
+      <h2>2. Custom Projection (Equisolid)</h2>
+      <p class="description">Using equisolid projection with custom initial zoom</p>
+      <div class="iframe-wrapper">
+        <iframe src="http://localhost:3001/?src=/panorama.jpg&projection=equisolid&initialZoom=1.5"></iframe>
+      </div>
+      <div class="code-block"><code>&lt;iframe src="http://localhost:3001/?src=/panorama.jpg&amp;projection=equisolid&amp;initialZoom=1.5"&gt;&lt;/iframe&gt;</code></div>
+    </div>
+
+    <!-- Test 3: With Initial View -->
+    <div class="test-section">
+      <h2>3. Custom Initial View</h2>
+      <p class="description">Setting initial yaw, pitch, and zoom</p>
+      <div class="iframe-wrapper">
+        <iframe src="http://localhost:3001/?src=/panorama.jpg&initialYaw=45&initialPitch=-15&initialZoom=1.2"></iframe>
+      </div>
+      <div class="code-block"><code>&lt;iframe src="http://localhost:3001/?src=/panorama.jpg&amp;initialYaw=45&amp;initialPitch=-15&amp;initialZoom=1.2"&gt;&lt;/iframe&gt;</code></div>
+    </div>
+
+    <!-- Test 4: With Labels (Base64) -->
+    <div class="test-section">
+      <h2>4. With Labels (Base64 Encoded)</h2>
+      <p class="description">Including panorama labels encoded in base64</p>
+      <div class="iframe-wrapper">
+        <iframe src="http://localhost:3001/?src=/panorama.jpg&labels=W3siaWQiOiJwdW1wMSIsIngiOjIwMDAsInkiOjE1MDAsInciOjQwMCwiaCI6MzAwLCJ0aXRsZSI6IlB1bXAgQSJ9XQ=="></iframe>
+      </div>
+      <div class="code-block"><code>&lt;iframe src="http://localhost:3001/?src=/panorama.jpg&amp;labels=W3siaWQiOiJwdW1wMSIsIngiOjIwMDAsInkiOjE1MDAsInciOjQwMCwiaCI6MzAwLCJ0aXRsZSI6IlB1bXAgQSJ9XQ=="&gt;&lt;/iframe&gt;</code></div>
+    </div>
+
+    <!-- Test 5: With Labels (URL-encoded) -->
+    <div class="test-section">
+      <h2>5. With Labels (URL-encoded)</h2>
+      <p class="description">Same labels but URL-encoded instead of base64</p>
+      <div class="iframe-wrapper">
+        <iframe src="http://localhost:3001/?src=/panorama.jpg&labels=%5B%7B%22id%22%3A%22pump1%22%2C%22x%22%3A2000%2C%22y%22%3A1500%2C%22w%22%3A400%2C%22h%22%3A300%2C%22title%22%3A%22Pump%20A%22%7D%5D"></iframe>
+      </div>
+      <div class="code-block"><code>&lt;iframe src="http://localhost:3001/?src=/panorama.jpg&amp;labels=%5B%7B%22id%22%3A%22pump1%22%2C%22x%22%3A2000%2C%22y%22%3A1500%2C%22w%22%3A400%2C%22h%22%3A300%2C%22title%22%3A%22Pump%20A%22%7D%5D"&gt;&lt;/iframe&gt;</code></div>
+    </div>
+
+    <!-- Test 6: Custom Zoom Range -->
+    <div class="test-section">
+      <h2>6. Custom Zoom Range</h2>
+      <p class="description">Setting min and max zoom limits</p>
+      <div class="iframe-wrapper">
+        <iframe src="http://localhost:3001/?src=/panorama.jpg&minZoom=0.8&maxZoom=2.0&initialZoom=1.5"></iframe>
+      </div>
+      <div class="code-block"><code>&lt;iframe src="http://localhost:3001/?src=/panorama.jpg&amp;minZoom=0.8&amp;maxZoom=2.0&amp;initialZoom=1.5"&gt;&lt;/iframe&gt;</code></div>
+    </div>
+
+    <!-- Test 7: Smaller Iframe -->
+    <div class="test-section">
+      <h2>7. Smaller Iframe</h2>
+      <p class="description">Demonstrating responsive sizing</p>
+      <div class="iframe-wrapper small-iframe">
+        <iframe src="http://localhost:3001/?src=/panorama.jpg"></iframe>
+      </div>
+      <div class="code-block"><code>&lt;iframe width="600" height="300" src="http://localhost:3001/?src=/panorama.jpg"&gt;&lt;/iframe&gt;</code></div>
+    </div>
+
+    <!-- Test 8: Error Handling - Missing src -->
+    <div class="test-section">
+      <h2>8. Error Handling (Missing src)</h2>
+      <p class="description">Should show error message when src is missing</p>
+      <div class="iframe-wrapper small-iframe">
+        <iframe src="http://localhost:3001/?"></iframe>
+      </div>
+      <div class="code-block"><code>&lt;iframe src="http://localhost:3001/?"&gt;&lt;/iframe&gt;</code></div>
+    </div>
+
+    <!-- Test 9: Different Projections -->
+    <div class="test-section">
+      <h2>9. All Projection Types</h2>
+      <p class="description">Comparing different projection types side by side</p>
+
+      <h3 style="margin-top: 20px; margin-bottom: 10px; color: #666;">Stereographic (Default)</h3>
+      <div class="iframe-wrapper" style="margin-bottom: 15px;">
+        <iframe src="http://localhost:3001/?src=/panorama.jpg&projection=stereographic"></iframe>
+      </div>
+
+      <h3 style="margin-top: 20px; margin-bottom: 10px; color: #666;">Equisolid</h3>
+      <div class="iframe-wrapper" style="margin-bottom: 15px;">
+        <iframe src="http://localhost:3001/?src=/panorama.jpg&projection=equisolid"></iframe>
+      </div>
+
+      <h3 style="margin-top: 20px; margin-bottom: 10px; color: #666;">Equidistant</h3>
+      <div class="iframe-wrapper" style="margin-bottom: 15px;">
+        <iframe src="http://localhost:3001/?src=/panorama.jpg&projection=equidistant"></iframe>
+      </div>
+
+      <h3 style="margin-top: 20px; margin-bottom: 10px; color: #666;">Rectilinear</h3>
+      <div class="iframe-wrapper">
+        <iframe src="http://localhost:3001/?src=/panorama.jpg&projection=rectilinear"></iframe>
+      </div>
+    </div>
+
+    <!-- Test 10: Responsive (16:9 Aspect Ratio) -->
+    <div class="test-section">
+      <h2>10. Responsive Embed (16:9 Aspect Ratio)</h2>
+      <p class="description">Uses CSS padding-top hack to maintain aspect ratio</p>
+      <div class="iframe-wrapper">
+        <div class="responsive-container">
+          <iframe src="http://localhost:3001/?src=/panorama.jpg"></iframe>
+        </div>
+      </div>
+      <div class="code-block"><code>&lt;div style="position: relative; width: 100%; padding-top: 56.25%;"&gt;
+  &lt;iframe style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"
+    src="http://localhost:3001/?src=/panorama.jpg"&gt;&lt;/iframe&gt;
+&lt;/div&gt;</code></div>
+    </div>
+  </div>
+</body>
+</html>
